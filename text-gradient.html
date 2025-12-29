@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Image Text with Gradient</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .description {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .text-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            min-height: 300px;
+        }
+
+        .image-text {
+            font-size: 90px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Gradient overlay animation */
+        .image-text::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, red 20%, blue 40%, orange 10%, purple 60%, green 80%);
+            background-size: 300% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            mix-blend-mode: overlay;
+            animation: gradientMove 8s ease infinite;
+            z-index: 2;
+        }
+
+
+        .my-text {
+            font-size: 122px;
+            font-weight: bolder;
+            background: linear-gradient(33deg, red, blue, orange);
+            letter-spacing: .5px;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 12s ease infinite;
+            background-size: 30% 20%;
+        }
+
+        .my-text2 {
+            position: relative;
+            font-size: 122px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(33deg, red, blue, orange);
+            background-size: cover;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: float 4s ease-in-out infinite;
+            animation: gradientMove 12s ease infinite;
+            background-size: 10% 200%;
+        }
+
+
+        /* Animations */
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .controls {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffcc00;
+        }
+
+        .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .control-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #a0d2ff;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #4a4a9a;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1rem;
+        }
+
+        button {
+            background: linear-gradient(90deg, #ff3366, #ff9933);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.6);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .instructions h3 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+            line-height: 1.7;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .instructions code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .image-text {
+                font-size: 60px;
+                letter-spacing: 3px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image-text {
+                font-size: 40px;
+                letter-spacing: 2px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .control-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-magic"></i> Animated Image Text with Gradient</h1>
+            <p class="description">
+                This effect combines an image mask with an animated gradient overlay. The text is filled with a mountain
+                image,
+                while a colorful gradient moves across it. Use the controls below to customize the animation and
+                gradient.
+            </p>
+        </header>
+
+        <div class="">
+            <h1 class="my-text">My Text</h1>
+        </div>
+        <div class="">
+            <h1 class="my-text2">My Text2</h1>
+        </div>
+
+        <div class="text-container">
+            <h2 class="image-text" data-text="EFFECT">EFFECT</h2>
+        </div>
+
+        <div class="controls">
+            <h2><i class="fas fa-sliders-h"></i> Animation Controls</h2>
+
+            <div class="control-group">
+                <div class="control-item">
+                    <label for="gradientSpeed"><i class="fas fa-tachometer-alt"></i> Gradient Speed</label>
+                    <select id="gradientSpeed">
+                        <option value="slow">Slow (12s)</option>
+                        <option value="medium" selected>Medium (8s)</option>
+                        <option value="fast">Fast (4s)</option>
+                    </select>
+                </div>
+
+                <div class="control-item">
+                    <label for="floatSpeed"><i class="fas fa-arrows-alt-v"></i> Float Speed</label>
+                    <select id="floatSpeed">
+                        <option value="slow">Slow (8s)</option>
+                        <option value="medium" selected>Medium (6s)</option>
+                        <option value="fast">Fast (3s)</option>
+                    </select>
+                </div>
+
+                <div class="control-item">
+                    <label for="imageSelect"><i class="fas fa-image"></i> Background Image</label>
+                    <select id="imageSelect">
+                        <option value="mountains">Mountains</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                        <option value="city">City Skyline</option>
+                        <option value="space">Space</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="applyBtn">
+                <i class="fas fa-play-circle"></i> Apply Changes
+            </button>
+        </div>
+
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> How This Effect Works</h3>
+            <ul>
+                <li>The text uses <code>-webkit-background-clip: text</code> and
+                    <code>-webkit-text-fill-color: transparent</code> to show the image through the text.
+                </li>
+                <li>A gradient overlay with animation is applied using a pseudo-element (<code>::after</code>) with
+                    <code>mix-blend-mode: overlay</code>.
+                </li>
+                <li>The gradient animation moves the background position to create the flowing color effect.</li>
+                <li>Another pseudo-element (<code>::before</code>) creates a pulsing shadow effect for added depth.</li>
+                <li>The entire text container has a floating animation for additional visual interest.</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>Created with HTML, CSS, and JavaScript | Animated Image Text Effect</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageText = document.querySelector('.image-text');
+            const gradientSpeed = document.getElementById('gradientSpeed');
+            const floatSpeed = document.getElementById('floatSpeed');
+            const imageSelect = document.getElementById('imageSelect');
+            const applyBtn = document.getElementById('applyBtn');
+
+            // Image URLs for different options
+            const imageUrls = {
+                mountains: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                ocean: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80',
+                forest: 'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                city: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80',
+                space: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80'
+            };
+
+            // Apply changes when button is clicked
+            applyBtn.addEventListener('click', function () {
+                // Update gradient animation speed
+                let gradientDuration;
+                switch (gradientSpeed.value) {
+                    case 'slow': gradientDuration = '12s'; break;
+                    case 'fast': gradientDuration = '4s'; break;
+                    default: gradientDuration = '8s';
+                }
+
+                // Update float animation speed
+                let floatDuration;
+                switch (floatSpeed.value) {
+                    case 'slow': floatDuration = '8s'; break;
+                    case 'fast': floatDuration = '3s'; break;
+                    default: floatDuration = '6s';
+                }
+
+                // Update the image
+                const selectedImage = imageSelect.value;
+                imageText.style.backgroundImage = `url('${imageUrls[selectedImage]}')`;
+
+                // Apply new animation speeds
+                const styleSheet = document.styleSheets[0];
+
+                // Update gradient animation
+                const gradientRule = findKeyframesRule('gradientMove');
+                if (gradientRule) {
+                    gradientRule.deleteRule('0%');
+                    gradientRule.deleteRule('50%');
+                    gradientRule.deleteRule('100%');
+
+                    gradientRule.appendRule(`0% { background-position: 0% 50%; }`);
+                    gradientRule.appendRule(`50% { background-position: 100% 50%; }`);
+                    gradientRule.appendRule(`100% { background-position: 0% 50%; }`);
+
+                    // Update animation duration
+                    imageText.style.animation = `float ${floatDuration} ease-in-out infinite`;
+                    const afterElement = getComputedStyle(imageText, '::after');
+                    imageText.style.setProperty('--gradient-duration', gradientDuration);
+
+                    // Force reflow to restart animations
+                    imageText.style.animation = 'none';
+                    setTimeout(() => {
+                        imageText.style.animation = `float ${floatDuration} ease-in-out infinite`;
+                    }, 10);
+                }
+
+                // Show confirmation message
+                applyBtn.innerHTML = '<i class="fas fa-check"></i> Changes Applied!';
+                setTimeout(() => {
+                    applyBtn.innerHTML = '<i class="fas fa-play-circle"></i> Apply Changes';
+                }, 2000);
+            });
+
+            // Helper function to find keyframes rule
+            function findKeyframesRule(ruleName) {
+                const ss = document.styleSheets;
+                for (let i = 0; i < ss.length; ++i) {
+                    for (let j = 0; j < ss[i].cssRules.length; ++j) {
+                        if (ss[i].cssRules[j].type === window.CSSRule.KEYFRAMES_RULE &&
+                            ss[i].cssRules[j].name === ruleName) {
+                            return ss[i].cssRules[j];
+                        }
+                    }
+                }
+                return null;
+            }
+
+            // Change text on click for demo purposes
+            imageText.addEventListener('click', function () {
+                const texts = ['EFFECT', 'DESIGN', 'CREATE', 'ANIMATE', 'CSS3'];
+                const currentText = this.dataset.text;
+                let newText = texts[(texts.indexOf(currentText) + 1) % texts.length];
+                this.textContent = newText;
+                this.dataset.text = newText;
+            });
+        });
+    </script>
+</body>
+
+</html>

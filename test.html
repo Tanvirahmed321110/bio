@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D সোলার সিস্টেম | বাংলাদেশ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Styles */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
+        }
+
+        #three-canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background: #050505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            text-align: center;
+        }
+
+        .planet-loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #3498db;
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* UI Panels */
+        .controls-panel,
+        .info-panel,
+        .planet-selector,
+        .status-bar {
+            position: absolute;
+            background: rgba(15, 15, 25, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+
+        .controls-panel {
+            top: 20px;
+            left: 20px;
+            width: 220px;
+        }
+
+        .info-panel {
+            top: 20px;
+            right: 20px;
+            width: 280px;
+            display: none;
+        }
+
+        .planet-selector {
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .planet-buttons {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 5px;
+        }
+
+        .btn,
+        .planet-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+
+        .planet-btn:hover {
+            background: #3498db;
+        }
+
+        .sun {
+            color: #ffcc00;
+            border-color: #ffcc00;
+        }
+
+        .status-bar {
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .stat {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-btn {
+            float: right;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+
+        .test {
+            width: 120px;
+            height: 120px;
+            background-color: rebeccapurple;
+            corner-shape: round;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="planet-loader"></div>
+            <p>সোলার সিস্টেম লোড হচ্ছে...</p>
+        </div>
+    </div>
+
+    <div class="controls-panel">
+        <h2><i class="fas fa-cogs"></i> কন্ট্রোলস</h2>
+        <div class="control-group">
+            <label for="speed">ঘূর্ণন গতি: <span id="speed-value">1x</span></label>
+            <input type="range" id="speed" min="0" max="5" step="0.1" value="1">
+        </div>
+        <div class="control-group">
+            <label><input type="checkbox" id="trails" checked> কক্ষপথ দেখুন</label>
+        </div>
+        <button id="reset-view" class="btn" style="width: 100%; margin-bottom: 5px;">
+            <i class="fas fa-redo"></i> রিসেট ভিউ
+        </button>
+    </div>
+
+    <div class="info-panel" id="info-panel">
+        <button class="close-btn" onclick="document.getElementById('info-panel').style.display='none'">&times;</button>
+        <h2 id="planet-name">সূর্য</h2>
+        <hr>
+        <div class="info-content">
+            <div class="stat"><i class="fas fa-ruler"></i> ব্যাস: <span id="planet-diameter">1,392,684 km</span></div>
+            <div class="stat"><i class="fas fa-weight"></i> ভর: <span id="planet-mass">1.989 × 10³⁰ kg</span></div>
+            <div class="stat"><i class="fas fa-temperature-high"></i> তাপমাত্রা: <span id="planet-temp">5,500°C</span>
+            </div>
+            <p id="planet-description" style="font-size: 0.9em; line-height: 1.4; color: #ccc;">সূর্য হল আমাদের সৌরজগতের
+                কেন্দ্রের তারা। এটি সমস্ত গ্রহের শক্তির উৎস।</p>
+        </div>
+    </div>
+
+    <div class="planet-selector">
+        <div class="planet-buttons">
+            <button class="planet-btn sun" onclick="focusPlanet('sun')">সূর্য</button>
+            <button class="planet-btn" onclick="focusPlanet('mercury')">বুধ</button>
+            <button class="planet-btn" onclick="focusPlanet('venus')">শুক্র</button>
+            <button class="planet-btn" onclick="focusPlanet('earth')">পৃথিবী</button>
+            <button class="planet-btn" onclick="focusPlanet('mars')">মঙ্গল</button>
+            <button class="planet-btn" onclick="focusPlanet('jupiter')">বৃহস্পতি</button>
+            <button class="planet-btn" onclick="focusPlanet('saturn')">শনি</button>
+            <button class="planet-btn" onclick="focusPlanet('uranus')">ইউরেনাস</button>
+            <button class="planet-btn" onclick="focusPlanet('neptune')">নেপচুন</button>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <span><i class="fas fa-satellite"></i> গ্রহ: 8</span>
+        <span><i class="fas fa-eye"></i> ভিউ: 3D সোলার সিস্টেম</span>
+        <span><i class="fas fa-code"></i> Powered by Three.js</span>
+    </div>
+
+    <canvas id="three-canvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+
+    <script>
+        // --- Three.js Logic ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // Orbit Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        camera.position.set(0, 100, 200);
+        controls.update();
+
+        // Stars Background
+        const starGeometry = new THREE.BufferGeometry();
+        const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
+        const starVertices = [];
+        for (let i = 0; i < 10000; i++) {
+            const x = (Math.random() - 0.5) * 2000;
+            const y = (Math.random() - 0.5) * 2000;
+            const z = (Math.random() - 0.5) * 2000;
+            starVertices.push(x, y, z);
+        }
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        const stars = new THREE.Points(starGeometry, starMaterial);
+        scene.add(stars);
+
+        // Lighting
+        const sunLight = new THREE.PointLight(0xffffff, 2, 1000);
+        scene.add(sunLight);
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+
+        // Planet Data
+        const planetData = {
+            sun: { radius: 25, color: 0xffcc00, dist: 0, speed: 0, desc: "সৌরজগতের কেন্দ্র।" },
+            mercury: { radius: 2, color: 0x888888, dist: 40, speed: 0.04, desc: "সবচেয়ে ছোট এবং সূর্যের নিকটতম গ্রহ।" },
+            venus: { radius: 4.5, color: 0xe3bb76, dist: 60, speed: 0.015, desc: "সৌরজগতের সবচেয়ে উত্তপ্ত গ্রহ।" },
+            earth: { radius: 5, color: 0x2233ff, dist: 85, speed: 0.01, desc: "আমাদের আবাসস্থল, একমাত্র প্রাণবন্ত গ্রহ।" },
+            mars: { radius: 3.5, color: 0xff4422, dist: 110, speed: 0.008, desc: "লাল গ্রহ নামে পরিচিত।" },
+            jupiter: { radius: 12, color: 0xd39c7e, dist: 160, speed: 0.004, desc: "সৌরজগতের বৃহত্তম গ্রহ।" },
+            saturn: { radius: 10, color: 0xc5ab6e, dist: 210, speed: 0.002, desc: "বলয় বা রিং এর জন্য বিখ্যাত।" },
+            uranus: { radius: 7, color: 0xbbe1e4, dist: 260, speed: 0.001, desc: "একটি শীতল বরফ দৈত্য।" },
+            neptune: { radius: 7, color: 0x6081ff, dist: 310, speed: 0.0008, desc: "সূর্য থেকে সবচেয়ে দূরবর্তী গ্রহ।" }
+        };
+
+        const planets = {};
+
+        // Create Planets & Orbits
+        Object.keys(planetData).forEach(key => {
+            const data = planetData[key];
+
+            // Sphere
+            const geo = new THREE.SphereGeometry(data.radius, 32, 32);
+            const mat = key === 'sun' ? new THREE.MeshBasicMaterial({ color: data.color }) : new THREE.MeshStandardMaterial({ color: data.color });
+            const mesh = new THREE.Mesh(geo, mat);
+
+            // Group for Orbiting
+            const group = new THREE.Group();
+            scene.add(group);
+            mesh.position.x = data.dist;
+            group.add(mesh);
+
+            planets[key] = { mesh, group, speed: data.speed, angle: Math.random() * Math.PI * 2 };
+
+            // Orbit Path
+            if (data.dist > 0) {
+                const orbitGeo = new THREE.RingGeometry(data.dist - 0.5, data.dist + 0.5, 64);
+                const orbitMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.1 });
+                const orbit = new THREE.Mesh(orbitGeo, orbitMat);
+                orbit.rotation.x = Math.PI / 2;
+                scene.add(orbit);
+                planets[key].orbit = orbit;
+            }
+        });
+
+        // Animation Loop
+        let globalSpeed = 1;
+        function animate() {
+            requestAnimationFrame(animate);
+
+            Object.keys(planets).forEach(key => {
+                const p = planets[key];
+                // Rotation
+                p.mesh.rotation.y += 0.01;
+                // Revolution
+                p.angle += p.speed * globalSpeed;
+                p.mesh.position.x = Math.cos(p.angle) * planetData[key].dist;
+                p.mesh.position.z = Math.sin(p.angle) * planetData[key].dist;
+            });
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // Logic Controls
+        document.getElementById('speed').addEventListener('input', (e) => {
+            globalSpeed = e.target.value;
+            document.getElementById('speed-value').innerText = globalSpeed + 'x';
+        });
+
+        document.getElementById('trails').addEventListener('change', (e) => {
+            Object.values(planets).forEach(p => { if (p.orbit) p.orbit.visible = e.target.checked; });
+        });
+
+        document.getElementById('reset-view').addEventListener('click', () => {
+            camera.position.set(0, 100, 200);
+            controls.target.set(0, 0, 0);
+        });
+
+        function focusPlanet(name) {
+            const data = planetData[name];
+            document.getElementById('planet-name').innerText = name.toUpperCase();
+            document.getElementById('planet-description').innerText = data.desc;
+            document.getElementById('info-panel').style.display = 'block';
+
+            // Move camera to planet
+            const pMesh = planets[name].mesh;
+            controls.target.set(pMesh.position.x, 0, pMesh.position.z);
+        }
+
+        window.addEventListener('load', () => {
+            document.getElementById('loading-screen').style.opacity = '0';
+            setTimeout(() => document.getElementById('loading-screen').style.display = 'none', 500);
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+/* Font Awesome Icon CDN */
+@import url("https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    /*______  Color  ______ */
+    --my-primary-color: #0F4638;
+    --my-secondary-color: #FC5A31;
+
+    --my-white: #FFFFFF;
+    --my-bg-dark: #000;
+    --my-bg-primary: #FFF;
+    --my-bg-secondary: #FAFAFA;
+    --my-bg-primary-hover: #FAFAFA;
+    --my-bg-white-off: #f4f4f4;
+    --my-bg-white-off2: #e0e0e0;
+    --my-bg-white-off3: #E9D7FE;
+    --my-bg-yellow: #DDED59;
+    --my-warring: #FDB022;
+    --my-gray: #A4A7AE;
+    --my-success: #17B26A;
+    --my-red: red;
+    --my-orange: #FC5A31;
+    --my-blue: #9b5de5;
+    --input-focus: #0f463828;
+
+    --my-white-off: #f1f1f1;
+    --my-white-off2: #e0e0e0;
+    --my-border-off: #f1f1f1;
+    --my-border-color: #E9D7FE;
+
+    --my-text-primary: #181D27;
+    --my-text-secondary: #414651;
+    --my-text-quaternary: #717680;
+    --my-text-tertiary: #535862;
+    --my-text-placeholder: #717680;
+    --my-text-yellow: #DDED59;
+    --my-text-rating: #FFBE0B;
+    --my-text-warring: #FDB022;
+    --my-text-white-off2: #ededed;
+
+    /* For Border color */
+    --my-border-primary: #D5D7DA;
+    --my-border-secondary: #E9EAEB;
+    --my-border-gray: #A4A7AE;
+
+
+
+
+
+
+
+    /* ______ bg color in section ______ */
+    --modal-bg: #1a161661;
+
+
+
+    /*______  Font Size  ______ */
+    --fs-low: 0.6875rem;
+    /* 11px */
+    --fs-xs: 0.78rem;
+    /* 12px */
+    --fs-sm: 0.84rem;
+    /* 13.5px */
+    --fs-md: 1rem;
+    /* 16px */
+    --fs-lg: 1.125rem;
+    /* 18px */
+    --fs-xl: 1.6rem;
+    /* 20px */
+    --fs-xxl: 2.25rem;
+    /* 36px */
+    --fs-xxxl: 3.75rem;
+    /* 60px */
+
+
+    /*______  Line Height  ______ */
+    --line-height-low: 16px;
+    --line-height-xs: 18px;
+    --line-height-sm: 20px;
+    --line-height-md: 24px;
+    --line-height-lg: 28px;
+    --line-height-xl: 30px;
+    --line-height-xxl: 38px;
+    --line-height-xxxl: 72px;
+
+
+
+    /*______  Border Radius  ______ */
+    --radius-xs: 2px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --radius-xl: 14px;
+    --radius-xxl: 16px;
+    --radius-4xl: 24px;
+    --radius-pill: 200px;
+    --radius-round: 50%;
+
+
+    /* Border  */
+    --border-secondary: 1px solid var(--my-border-color);
+
+
+
+    /*______  Font Weight  ______ */
+    --fw-400: 400;
+    --fw-500: 500;
+    --fw-600: 600;
+    --fw-700: 700;
+
+    --font-inter: 'Poppins',
+        sans-serif;
+
+
+    /* ________ Gradient ________ */
+    --gradient-1: linear-gradient(to right, #016bf8, #0f3f83);
+    --gradient-2: linear-gradient(to right, #0f3f83, #016bf8);
+    --gradient-login: linear-gradient(to right, #173e57c9, #919fa7d6);
+
+
+    /*________  shadow  ________*/
+    /* --shadow-0: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    --shadow-1: 0 2px 3px rgba(54, 54, 54, 0.04);
+    --shadow-2: 1px 2px 5px rgba(0, 0, 0, .07);
+    --shadow-3: 1px 3px 9px rgba(40, 40, 41, 0.193);
+    --shadow-4: 0 1px 6px 0 rgb(0 0 0 / 20%); */
+
+    --shadow-sm:
+        0px 1px 2px 0px #afafaf0a;
+
+    /* Medium shadow */
+    --shadow-md:
+        0px 1px 3px 0px #0A0D120A,
+        0px 4px 6px -1px #0A0D120A;
+    --shadow-lg: 0px 2px 2px -1px #0A0D120A, 0px 4px 6px -2px #0A0D1208, 0px 12px 16px -4px #0a0d1221;
+    --shadow-all-sm:
+        0 0 4px rgba(0, 0, 0, 0.04),
+        0 0 5px rgba(0, 0, 0, 0.05);
+
+    /* Medium */
+    --shadow-all-md:
+        0 0 6px rgba(0, 0, 0, 0.08),
+        0 0 12px rgba(0, 0, 0, 0.12);
+
+    /* Large */
+    --shadow-all-lg:
+        0 0 6px rgba(0, 0, 0, 0.08),
+        0 0 12px rgba(0, 0, 0, 0.12),
+        0 0 20px rgba(0, 0, 0, 0.16);
+
+}
+
+.hero-slider .carousel .carousel-inner .carousel-item img {
+    object-fit: cover !important;
+}
+
+.right-banner img {
+    object-fit: cover;
+    border-radius: 0;
+}
+
+
+
+/* responsive font */
+@media (max-width:991px) {
+    :root {
+        /*______  Font Size  ______ */
+        /* --fs-xs: 13px;
+        --fs-sm: 15px;
+        --fs-md: 17px;
+        --fs-lg: 19px;
+        --fs-xl: 22px;
+        --fs-xxl: 25px;
+        --fs-xxxl: 36px; */
+    }
+}
