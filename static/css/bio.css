@@ -62,6 +62,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    perspective: 200px;
 }
 
 .image-wrapper img {
@@ -70,13 +72,41 @@ body {
     height: 160px;
     border-radius: 12px;
     padding: 4px;
-    /* box-shadow: var(--shadow-all-sm); */
-    /* padding-left: 4px;
-    padding-top: 4px; */
-    /* background-color: var(--my-white);
-    padding-bottom: 0; */
+    /* Remove animation line */
+    transform: rotateX(4deg) rotateY(4deg);
+    transform-style: preserve-3d;
+    box-shadow:
+        10px 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    animation: rotate3D 6s ease infinite;
 }
 
+@keyframes rotate3D {
+
+    0%,
+    100% {
+        transform: rotateX(-4px) rotateY(-4px) rotateZ(-4px);
+    }
+
+    50% {
+        transform: rotateX(-4deg) rotateY(-4deg) rotateZ(-4deg);
+    }
+}
+
+@keyframes slideToCenter {
+
+    0%,
+    100% {
+        border: 7px solid var(--my-secondary-color);
+        transform: translateY(-4px);
+    }
+
+    50% {
+        border: 7px solid var(--my-gray);
+        transform: translateY(2px);
+        /* This centers it properly */
+    }
+}
 
 .sidebar .border-line {
     width: 100%;
@@ -144,15 +174,17 @@ body {
 
 @keyframes pulse {
     0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.8;
-        /* background-color: white; */
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.5;
+    }
+
+    70% {
+        opacity: 0.2;
     }
 
     100% {
-        transform: translate(-50%, -50%) scale(1.8);
+        transform: translate(-50%, -50%) scale(1.6);
         opacity: 0;
-        background-color: white;
     }
 }
 
@@ -174,11 +206,28 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: var(--my-gray);
-    border: 2px solid var(--my-bg-white-off3);
     background-color: var(--my-success);
+    border: 2px solid var(--my-bg-white-off3);
+    animation: colorChange 1s infinite alternate;
 }
 
+@keyframes colorChange {
+    0% {
+        background-color: var(--my-blue);
+    }
+
+    33% {
+        background-color: var(--my-secondary-color);
+    }
+
+    66% {
+        background-color: var(--my-rating);
+    }
+
+    100% {
+        background-color: var(--my-primary-color);
+    }
+}
 
 
 /* শুধু প্রথমটার জন্য extra bottom dot (::after) */
