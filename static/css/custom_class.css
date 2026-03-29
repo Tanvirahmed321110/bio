@@ -14,15 +14,15 @@ html {
 
 body {
     font-size: var(--fs-sm);
-    font-family: var(--font-inter);
     font-weight: var(--fw-400);
     color: var(--my-text-secondary);
-    min-width: 400px;
+    min-width: 380px;
     background-color: var(--my-white);
     min-height: 100%;
     display: flex;
     flex-direction: column;
     scrollbar-width: thin;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* For WebKit browsers: Chrome, Edge, Safari */

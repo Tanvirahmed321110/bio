@@ -25,7 +25,7 @@ body {
 
 .bio-wrapper .sidebar .top {
     position: relative;
-    z-index: 3;
+    z-index: 1;
     overflow: hidden;
 }
 
@@ -69,7 +69,7 @@ body {
 .image-wrapper img {
     border: 7px solid var(--my-border-secondary);
     width: 160px;
-    height: 160px;
+    height: 170px;
     border-radius: 12px;
     padding: 4px;
     /* Remove animation line */
@@ -143,10 +143,15 @@ body {
 
 
 
-
+.main-content {
+    position: relative;
+    z-index: 1;
+}
 
 .main-content .main-content-head {
     background-color: var(--my-blue);
+    background: linear-gradient(to bottom, var(--my-blue), blueviolet, transparent);
+    z-index: 3;
 }
 
 .live-btn {
@@ -205,10 +210,32 @@ body {
     left: -8px;
     width: 10px;
     height: 10px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
+    transform: rotate(12deg);
     background-color: var(--my-success);
     border: 2px solid var(--my-bg-white-off3);
     animation: colorChange 1s infinite alternate;
+}
+
+.star {
+    position: absolute;
+    top: 80px;
+    right: 28px;
+    animation: spin 1.5s linear infinite;
+    /* linear for smooth continuous spin */
+    transform-origin: center;
+    opacity: 0.65;
+}
+
+/* Keyframes for spin */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes colorChange {
@@ -218,14 +245,17 @@ body {
 
     33% {
         background-color: var(--my-secondary-color);
+        transform: rotate(-22deg);
     }
 
     66% {
         background-color: var(--my-rating);
+        transform: rotate(2deg);
     }
 
     100% {
         background-color: var(--my-primary-color);
+        transform: rotate(180deg);
     }
 }
 
@@ -238,20 +268,66 @@ body {
     left: -8px;
     width: 10px;
     height: 10px;
-    border-radius: 50%;
     background-color: var(--my-success);
     border: 2px solid var(--my-border-primary);
 }
 
 
 
+.main-content {
+    position: relative;
+    z-index: 1;
+    background-image: url('https://images.unsplash.com/photo-1690382285917-73dfd2a22d07?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+    background-position: center;
+    animation: bgShift 20s linear infinite;
+}
 
+/* Keyframes to shift background */
+@keyframes bgShift {
+    0% {
+        background-position: 0px 0px;
+    }
 
+    50% {
+        background-position: -220px 80px;
+    }
+
+    100% {
+        background-position: 0px 10px;
+    }
+
+    0% {
+        background-position: 0px 0px;
+    }
+}
+
+.main-content::after {
+    position: absolute;
+    content: '';
+    inset: 0;
+    background-color: rgba(42, 39, 42, 0.5);
+    z-index: -1;
+
+}
+
+.main-content .my-text-primary {
+    color: var(--my-white);
+    margin-bottom: 4px;
+}
+
+.main-content .my-text-tertiary {
+    color: #c1bfbf;
+}
 
 /* education */
 .main-content .education table {
     border-collapse: collapse;
     background-color: transparent;
+}
+
+.main-content .item-wrapper .my-fw-bold {
+    font-weight: 500;
 }
 
 .main-content .education table th {
@@ -267,7 +343,9 @@ body {
     font-size: 12px;
     padding: 2px 4px;
     border: 1px solid var(--my-border-secondary);
-    font-weight: 500;
+    font-weight: 400;
+    color: var(--my-white);
+    background-color: white;
     color: var(--my-text-tertiary);
 }
 
@@ -368,7 +446,8 @@ body {
     }
 
     .item-wrapper li {
-        border-bottom: 1px solid var(--my-border-secondary);
+        border-bottom: 1px dashed #605e5eab;
+        line-height: 22px;
     }
 
     .education table,
@@ -415,7 +494,7 @@ body {
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 21;
+        z-index: 2;
         width: 100%;
     }
 
@@ -430,7 +509,7 @@ body {
 
     .sidebar .top .content {
         position: relative;
-        z-index: 2;
+        z-index: 1;
         padding: 40px 0;
     }
 
@@ -448,10 +527,17 @@ body {
 
     .image-wrapper img {
         width: 170px;
-        height: 170px;
+        height: 184px;
     }
 
-
-
+    .star {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        animation: spin 1.5s linear infinite;
+        /* linear for smooth continuous spin */
+        transform-origin: center;
+        opacity: 0.65;
+    }
 
 }
