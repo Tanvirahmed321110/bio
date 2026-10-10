@@ -28,8 +28,10 @@
                         <!--======== For Top =======-->
                         <div class="top">
                             <div class="content">
-                                <div class="image-wrapper">
+                                <div class="image-wrapper" id="profileSlider">
                                     <img
+                                        id="profileImage"
+                                        class="profile-img active"
                                         src="./static/images/tanvirprofile.png"
                                         alt="Tanvir's Image"
                                     />
@@ -877,6 +879,35 @@
             // For image Gallery
             const lightbox = GLightbox({
                 selector: '.glightbox',
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // ছবিগুলোর অ্যারে (এখানে যত খুশি ছবি যোগ করতে পারেন)
+                const imageArray = [
+                    './static/images/tanvirprofile.png',
+                    './static/images/img2.jpg',
+                ];
+
+                const profileImg = document.getElementById('profileImage');
+                let currentIndex = 0;
+
+                // প্রতি ৩ সেকেন্ড পর পর ছবি পরিবর্তন হবে
+                if (imageArray.length > 1) {
+                    setInterval(() => {
+                        // ফেড আউট
+                        profileImg.classList.add('fade-out');
+
+                        setTimeout(() => {
+                            // পরের ছবিতে পরিবর্তন
+                            currentIndex =
+                                (currentIndex + 1) % imageArray.length;
+                            profileImg.src = imageArray[currentIndex];
+
+                            // ফেড ইন
+                            profileImg.classList.remove('fade-out');
+                        }, 1500); // CSS transition এর সময়ের সাথে মিল রাখুন
+                    }, 3000);
+                }
             });
         </script>
     </body>

@@ -13,7 +13,7 @@ body {
     gap: 0px;
 }
 
-
+/*  */
 
 /************************
     Sidebar Start Here
@@ -52,11 +52,6 @@ body {
     /* background-color: rebeccapurple; */
 }
 
-
-
-
-
-
 /*============ image-wrapper ============*/
 .image-wrapper {
     display: flex;
@@ -68,8 +63,8 @@ body {
 
 .image-wrapper img {
     border: 7px solid var(--my-border-secondary);
-    width: 160px;
-    height: 170px;
+    width: 190px;
+    height: 220px;
     border-radius: 12px;
     padding: 4px;
     /* Remove animation line */
@@ -82,7 +77,6 @@ body {
 }
 
 @keyframes rotate3D {
-
     0%,
     100% {
         transform: rotateX(-4px) rotateY(-4px) rotateZ(-4px);
@@ -94,7 +88,6 @@ body {
 }
 
 @keyframes slideToCenter {
-
     0%,
     100% {
         border: 7px solid var(--my-secondary-color);
@@ -138,11 +131,6 @@ body {
     padding-bottom: 0;
 }
 
-
-
-
-
-
 .main-content {
     position: relative;
     z-index: 1;
@@ -150,7 +138,12 @@ body {
 
 .main-content .main-content-head {
     background-color: var(--my-blue);
-    background: linear-gradient(to bottom, var(--my-blue), blueviolet, transparent);
+    background: linear-gradient(
+        to bottom,
+        var(--my-blue),
+        blueviolet,
+        transparent
+    );
     z-index: 3;
 }
 
@@ -165,7 +158,7 @@ body {
 
 /* Animation Effect */
 .live-btn::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -259,10 +252,9 @@ body {
     }
 }
 
-
 /* শুধু প্রথমটার জন্য extra bottom dot (::after) */
 .item-wrapper:last-of-type::before {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -15px;
     left: -8px;
@@ -271,8 +263,6 @@ body {
     background-color: var(--my-success);
     border: 2px solid var(--my-border-primary);
 }
-
-
 
 .main-content {
     position: relative;
@@ -308,7 +298,6 @@ body {
     inset: 0;
     background-color: rgba(42, 39, 42, 0.5);
     z-index: -1;
-
 }
 
 .main-content .my-text-primary {
@@ -361,7 +350,6 @@ body {
     width: 140px;
 }
 
-
 .name {
     position: relative;
     display: inline-block;
@@ -382,8 +370,6 @@ body {
     text-shadow: 0 30px rgba(255, 255, 255, 0.2);
 }
 
-
-
 /* Animations */
 @keyframes gradientMove {
     0% {
@@ -399,15 +385,12 @@ body {
     }
 }
 
-
-
 /* Responsive: stack rows like cards */
-@media (max-width:991px) {
-
+@media (max-width: 991px) {
     :root {
         --fs-xs: 0.78rem;
         /* 12px */
-        --fs-sm: 0.80rem;
+        --fs-sm: 0.8rem;
         /* 13.5px */
     }
 
@@ -539,5 +522,4 @@ body {
         transform-origin: center;
         opacity: 0.65;
     }
-
 }
